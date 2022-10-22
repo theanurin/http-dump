@@ -43,6 +43,7 @@ jobs:
       build_rc_version: ${{ steps.build_vars.outputs.build_rc_version }}
       build_tag_version: ${{ steps.build_vars.outputs.build_tag_version }}
       build_version_appender: ${{ steps.build_vars.outputs.build_version_appender }}
+      dockerhub_publish: ${{ steps.platforms.outputs.dockerhub_publish }}
       platforms: ${{ steps.platforms.outputs.platforms }}
       platforms_count: ${{ steps.platforms.outputs.platforms_count }}
       test_dockerfiles: ${{ steps.dockerfiles.outputs.test_dockerfiles }}
