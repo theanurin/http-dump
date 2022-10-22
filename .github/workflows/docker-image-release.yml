@@ -43,7 +43,7 @@ jobs:
       build_rc_version: ${{ steps.build_vars.outputs.build_rc_version }}
       build_tag_version: ${{ steps.build_vars.outputs.build_tag_version }}
       build_version_appender: ${{ steps.build_vars.outputs.build_version_appender }}
-      dockerhub_publish: ${{ steps.platforms.outputs.dockerhub_publish }}
+      dockerhub_publish: ${{ steps.build_vars.outputs.dockerhub_publish }}
       platforms: ${{ steps.platforms.outputs.platforms }}
       platforms_count: ${{ steps.platforms.outputs.platforms_count }}
       test_dockerfiles: ${{ steps.dockerfiles.outputs.test_dockerfiles }}
@@ -126,17 +126,21 @@ jobs:
         if [ -n "${BUILD_RC_VERSION}" ]; then
           echo "  BUILD_RC_VERSION: ${BUILD_RC_VERSION}"
           echo "build_rc_version=${BUILD_RC_VERSION}" >> "${GITHUB_OUTPUT}"
+          echo "Set build_is_release_candidate to 'yes'"
           echo "build_is_release_candidate=yes" >> "${GITHUB_OUTPUT}"
         else
+          echo "Set build_is_release_candidate to 'no'"
           echo "build_is_release_candidate=no" >> "${GITHUB_OUTPUT}"
         fi
         echo "  BUILD_TAG_VERSION: ${BUILD_TAG_VERSION}"
         echo "build_tag_version=${BUILD_TAG_VERSION}" >> "${GITHUB_OUTPUT}"
         case "${DOCKERHUB_PUBLISH}" in
           yes|YES)
+            echo "Set dockerhub_publish to 'yes'"
             echo "dockerhub_publish=yes" >> "${GITHUB_OUTPUT}"
             ;;
           *)
+            echo "Set dockerhub_publish to 'no'"
             echo "dockerhub_publish=no" >> "${GITHUB_OUTPUT}"
             ;;
         esac
