@@ -1,0 +1,36 @@
+{
+  "name": "@theanurin/http-dump",
+  "version": "0.1.0",
+  "description": "Dumps HTTP(s) requests into files",
+  "main": "src/index.js",
+  "scripts": {
+    "clean": "find src \\( -name '*.js' -o -name '*.d.ts' -o -name '*.map' \\) -exec rm {} \\; ;",
+    "build": "tsc",
+    "start": "./bin/app.js --config-env"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/theanurin/http-dump.git"
+  },
+  "keywords": [
+    "HTTP",
+    "Dump"
+  ],
+  "author": "Maksym Anurin",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/theanurin/http-dump/issues"
+  },
+  "homepage": "https://github.com/theanurin/http-dump#readme",
+  "engines": {
+    "node": ">=18",
+    "vscode": "^1.71.2"
+  },
+  "devDependencies": {
+    "typescript": "^4.8.4"
+  },
+  "dependencies": {
+    "@freemework/common": "^0.6.2",
+    "@freemework/hosting": "^0.6.2"
+  }
+}

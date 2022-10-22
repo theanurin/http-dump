@@ -1,0 +1,10 @@
+./*
+
+!/bin
+!/docker/docker-entrypoint-*.sh
+!/src
+!/.eslintrc.js
+!/.npmrc
+!/package-lock.json
+!/package.json
+!/tsconfig.json

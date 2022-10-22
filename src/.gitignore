@@ -1,0 +1,4 @@
+# Compiled TypeScript code
+*.d.ts
+*.js
+*.js.map
