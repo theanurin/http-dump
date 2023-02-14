@@ -14,18 +14,26 @@ A simple HTTP server that dumps the request to files. **HTTP Dump** was created 
 # Launch
 
 ```shell
+# Optional. Default: "true"
+export DUMP_FILE="true"
+
 # Optional. Default: "/data"
-export DUMP_DIRECTORY="/data"
+export DUMP_FILE_DIRECTORY="/data"
 
 # Optional. Default: ""
 export DUMP_FILE_PREFIX=""
+
+# Optional. Default: "true"
+export DUMP_LOG="true"
 
 docker run \
   --rm \
   --interactive \
   --tty \
-  --env DUMP_DIRECTORY \
+  --env DUMP_FILE \
+  --env DUMP_FILE_DIRECTORY \
   --env DUMP_FILE_PREFIX \
+  --env DUMP_STDOUT \
   --publish 127.0.0.1:8080:8080/tcp \
   --volume "$PWD/.data:$DUMP_DIRECTORY" \
   theanurin/http-dump

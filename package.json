@@ -1,6 +1,6 @@
 {
   "name": "@theanurin/http-dump",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "Dumps HTTP(s) requests into files",
   "main": "src/index.js",
   "scripts": {
@@ -23,14 +23,13 @@
   },
   "homepage": "https://github.com/theanurin/http-dump#readme",
   "engines": {
-    "node": ">=18",
-    "vscode": "^1.71.2"
+    "node": ">=18"
   },
   "devDependencies": {
-    "typescript": "^4.8.4"
+    "typescript": "^4.9.5"
   },
   "dependencies": {
-    "@freemework/common": "^0.6.2",
-    "@freemework/hosting": "^0.6.2"
+    "@freemework/common": "^0.9.5",
+    "@freemework/hosting": "^0.9.0"
   }
 }

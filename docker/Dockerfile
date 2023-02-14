@@ -50,7 +50,7 @@ WORKDIR /build
 RUN npm install --progress=false
 RUN mkdir -p /stage/usr/local/theanurin/http-dump
 RUN npx tsc --project tsconfig.json --rootDir /build --outDir /stage/usr/local/theanurin/http-dump
-RUN cd /stage/usr/local/theanurin/http-dump/ && npm install --production --progress=false
+RUN cd /stage/usr/local/theanurin/http-dump/ && npm install --omit=dev --progress=false
 RUN jq -M ".build.project_url=\"${BUILD_PROJECT_URL}\"" < /stage/usr/local/theanurin/http-dump/package.json | sponge /stage/usr/local/theanurin/http-dump/package.json
 RUN jq -M ".build.commit.reference=\"${BUILD_COMMIT_REF}\"" < /stage/usr/local/theanurin/http-dump/package.json | sponge /stage/usr/local/theanurin/http-dump/package.json
 RUN jq -M ".build.pipeline_url=\"${BUILD_PIPELINE_URL}\"" < /stage/usr/local/theanurin/http-dump/package.json | sponge /stage/usr/local/theanurin/http-dump/package.json
