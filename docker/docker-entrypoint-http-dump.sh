@@ -1,8 +1,8 @@
 #!/bin/sh
 #
 
-if [ -z "${DUMP_DIRECTORY}" ]; then
-	echo "{ \"level\":\"fatal\", \"message\": \"A DUMP_DIRECTORY variable is empty. Cannot continue.\" }" >&2
+if [ -z "${DUMP_FILE_DIRECTORY}" ]; then
+	echo "{ \"level\":\"fatal\", \"message\": \"A DUMP_FILE_DIRECTORY variable is empty. Cannot continue.\" }" >&2
 	exit 1
 fi
 
@@ -10,9 +10,9 @@ fi
 if [ "$(id -u)" = '0' ]; then
 	echo "{ \"level\":\"info\", \"message\": \"Started as user 'root'.\" }"
 
-	echo "{ \"level\":\"info\", \"message\": \"Fixing pemissions for '${DUMP_DIRECTORY}' directory.\" }"
-	chown node "${DUMP_DIRECTORY}"
-	chmod 777  "${DUMP_DIRECTORY}"
+	echo "{ \"level\":\"info\", \"message\": \"Fixing pemissions for '${DUMP_FILE_DIRECTORY}' directory.\" }"
+	chown node "${DUMP_FILE_DIRECTORY}"
+	chmod 777  "${DUMP_FILE_DIRECTORY}"
 
 	echo "{ \"level\":\"info\", \"message\": \"Restarting as user 'node'...\" }"
 	exec su node "$0" -- "$@"
@@ -20,8 +20,8 @@ else
 	echo "{ \"level\":\"info\", \"message\": \"Started as user '$(id -u -n)'.\" }"
 
 	# The -O file option tests if file exists and is owned by the effective user ID.
-	if [ ! -O "${DUMP_DIRECTORY}" ]; then
-		echo "{ \"level\":\"fatal\", \"message\": \"A '${DUMP_DIRECTORY}' directory should be owned by started user. Cannot continue.\" }" >&2
+	if [ ! -O "${DUMP_FILE_DIRECTORY}" ]; then
+		echo "{ \"level\":\"fatal\", \"message\": \"A '${DUMP_FILE_DIRECTORY}' directory should be owned by started user. Cannot continue.\" }" >&2
 		exit 2
 	fi
 fi

@@ -109,8 +109,10 @@ COPY --from=compositor /stage/ /
 # RUN update-ca-certificates
 EXPOSE 8080
 ENV DO_INIT_SLEEP=
-ENV DUMP_DIRECTORY="/data"
+ENV DUMP_FILE="true"
+ENV DUMP_FILE_DIRECTORY="/data"
 ENV DUMP_FILE_PREFIX=""
+ENV DUMP_STDOUT="true"
 VOLUME [ "${DUMP_DIRECTORY}" ]
 ENTRYPOINT [ "/usr/local/bin/docker-entrypoint-http-dump.sh" ]
 CMD [ "--config-env" ]

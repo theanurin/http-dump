@@ -24,7 +24,7 @@ export DUMP_FILE_DIRECTORY="/data"
 export DUMP_FILE_PREFIX=""
 
 # Optional. Default: "true"
-export DUMP_LOG="true"
+export DUMP_STDOUT="true"
 
 docker run \
   --rm \
