@@ -1,6 +1,6 @@
 import { FConfiguration } from "@freemework/common";
 
-export class AppConfiguration {
+export class AppSettings {
 	private constructor(
 		public readonly listenHost: string,
 		public readonly listenPort: number,
@@ -11,8 +11,8 @@ export class AppConfiguration {
 		public readonly dumpStdout: null | {}
 	) { }
 
-	public static parse(rawCfg: FConfiguration): AppConfiguration {
-		return Object.freeze<AppConfiguration>({
+	public static parse(rawCfg: FConfiguration): AppSettings {
+		return Object.freeze<AppSettings>({
 			listenHost: rawCfg.get("LISTEN_HOST", "0.0.0.0").asString,
 			listenPort: rawCfg.get("LISTEN_PORT", "8080").asPortNumber,
 			dumpFile: rawCfg.get("DUMP_FILE", "true").asBoolean ? Object.freeze({

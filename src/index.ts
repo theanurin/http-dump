@@ -4,16 +4,22 @@ import { createWebServer, FLauncherRuntime } from "@freemework/hosting";
 import * as fs from "fs";
 import * as path from "path";
 import * as stream from "stream";
+import * as util from "util";
 
-import { AppConfiguration } from "./app_configuration";
+const readdirAsync = util.promisify(fs.readdir);
 
-export { AppConfiguration } from "./app_configuration";
+import { AppSettings } from "./app_settings";
 
-FLogger.setLoggerFactory((loggerName: string) => FLoggerConsole.create(loggerName, FLoggerLevel.DEBUG));
+export { AppSettings } from "./app_settings";
+
+FLogger.setLoggerFactory((loggerName: string) => FLoggerConsole.create(loggerName, {
+	level: FLoggerLevel.DEBUG,
+	format: "text"
+}));
 
 const { name: serviceName, version: serviceVersion } = require("../package.json");
 
-export default async function (executionContext: FExecutionContext, appConfig: AppConfiguration): Promise<FLauncherRuntime> {
+export default async function (executionContext: FExecutionContext, appConfig: AppSettings): Promise<FLauncherRuntime> {
 	const logger: FLogger = FLogger.create("HTTP Dump");
 
 	// Append serviceName and serviceVersion in logger context
@@ -33,11 +39,43 @@ export default async function (executionContext: FExecutionContext, appConfig: A
 	});
 
 	let fileCounter: number = 0;
+	if (appConfig.dumpFile !== null) {
+		const scanDir = appConfig.dumpFile.directory !== ""
+			? appConfig.dumpFile.directory
+			: process.cwd();
+		const files: Array<string> = await readdirAsync(scanDir);
+		files
+			.sort()
+			.reverse();
+		// console.log(files);
+		const pattern: RegExp = /\.head$/;
+		for (const file of files) {
+			if (file.length >= 13 && pattern.test(file)) {
+				
+				// 00000000.head
+				const fileNumberStr: string = file.slice(-13).substring(0, 8);
+				const fileNumber: number = Number.parseInt(fileNumberStr);
+				
+				if(fileNumber > 0) {
+					fileCounter = fileNumber + 1
+				}
+				break;
+			}
+		}
+		logger.info(executionContext, ()=>`Start file sequence from ${fileCounter.toString(10).padStart(8, "0")}`);
+	}
+
 	httpServer.rootExpressApplication.use("/", (req, res) => {
 		const reqExecutionContext: FExecutionContext = new FLoggerLabelsExecutionContext(executionContext, {
 			"method": req.method,
 			"path": req.path,
-			"ip": req.ip
+			...(
+				req.ip !== undefined
+					? {
+						"ip": req.ip
+					}
+					: {}
+			)
 		});
 		const dumpHeaderStreams: Array<[stream.Writable, boolean]> = [];
 		const dumpBodyStreams: Array<[stream.Writable, boolean]> = [];

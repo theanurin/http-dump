@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
-const { Flauncher } = require("@freemework/hosting");
+const { FLauncher } = require("@freemework/hosting");
 
-const { default: runtimeFactory, AppConfiguration } = require("..");
+const { default: runtimeFactory, AppSettings } = require("..");
 
 // Launch the app
-Flauncher(AppConfiguration.parse, runtimeFactory);
+FLauncher(AppSettings.parse, runtimeFactory);
